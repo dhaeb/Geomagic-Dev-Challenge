@@ -1,16 +1,12 @@
 package de.geomagic.model;
 
-import lombok.val;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Simple tests for Line functions.
@@ -34,7 +30,8 @@ class LineTest {
     private static Stream<Arguments> calcEuclideanDistanceParams() {
         return Stream.of(
                 Arguments.of(new Point2D(0,0), new Point2D(1,0), 1),
-                Arguments.of(new Point2D(0,0), new Point2D(1,1), 1.414) // √2
+                Arguments.of(new Point2D(0,0), new Point2D(1,1), 1.414), // √2
+                Arguments.of(new Point2D(0,0), new Point2D(-1,-1), 1.414) // √2
         );
     }
 }
