@@ -1,0 +1,15 @@
+### File that tells git permanently which files to avoid tracking in the VCS
+### Author: Dan Häberlein, dan.haeberlein@gmail.com
+### 
+
+# For IDEA IDE
+
+.idea/
+
+# maven output should not be tracked
+
+target/
+
+# java classes are also a nogo in the VCS
+
+.class
