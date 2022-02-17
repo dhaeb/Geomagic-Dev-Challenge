@@ -16,9 +16,9 @@ class PointTest {
 
     @Test
     void constructorAndGettersExists() {
-        val testable = new Point2D(1.0,2.0);
-        assertEquals(1.0, testable.getX(), new TestConstants().getTestDelta());
-        assertEquals(2.0, testable.getY(), new TestConstants().getTestDelta());
+        val testable = new TestConstants().getPoint_0_1();
+        assertEquals(0.0d, testable.getX(), new TestConstants().getTestDelta());
+        assertEquals(1.0d, testable.getY(), new TestConstants().getTestDelta());
     }
 
 }

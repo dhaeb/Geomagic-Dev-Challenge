@@ -8,6 +8,7 @@ import lombok.val;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,8 +20,8 @@ public class ConnectedLine implements Line {
         this.lines = lines;
     }
 
-    public List<Point2D> getConnectionPoints() {
-        var result = new ArrayList<Point2D>();
+    public Set<Point2D> getConnectionPoints() {
+        var result = new HashSet<Point2D>();
         val testingHash = new HashSet<Point2D>();
         for(SimpleLine l : this.lines){
             if(testingHash.contains(l.getP1())){
@@ -45,7 +46,7 @@ public class ConnectedLine implements Line {
 
     @Override
     public OrderAgnosticPair<Point2D, Point2D> getEndpoints() {
-        HashSet<Point2D> connectionPoints = new HashSet<>(getConnectionPoints());
+        Set<Point2D> connectionPoints = getConnectionPoints();
         val allPointsAsSteam = Stream.concat(lines.stream().map(l -> l.getP1()), lines.stream().map(l -> l.getP2()));
         List<Point2D> result = allPointsAsSteam.filter((p) -> !connectionPoints.contains(p)).collect(Collectors.toList());
         if(result.size() == 2) {
