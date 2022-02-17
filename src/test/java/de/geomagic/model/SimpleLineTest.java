@@ -13,17 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *
  * @author Dan Haeberlein
  */
-class LineTest {
+class SimpleLineTest {
 
     @ParameterizedTest
     @MethodSource("calcEuclideanDistanceParams")
     void testCalcEuclideanDistance(Point2D p1, Point2D p2, double expected ) {
-        double result = new Line(p1, p2).calcEuclideanDistance();
-        assertEquals(expected, result, 0.001);
+        double result = new SimpleLine(p1, p2).calcEuclideanDistance();
+        assertEquals(expected, result, new TestConstants().getTestDelta());
     }
 
     /**
-     * Paramters for testing euclidean distance, 0.001 is default delta!
+     * Paramters for testing euclidean distance, 0.001 is default delta, see @{@link TestConstants}
      *
      * @return each Stream entry will result into a test in {@code testCalcEuclideanDistance}
      */
