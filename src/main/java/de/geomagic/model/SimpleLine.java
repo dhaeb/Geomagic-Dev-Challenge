@@ -54,6 +54,11 @@ public class SimpleLine implements Line {
     }
 
     @Override
+    public ConnectedLine add(SimpleLine s) {
+        return ConnectedLine.of(this, s);
+    }
+
+    @Override
     public double length() {
         return calcEuclideanDistance();
     }

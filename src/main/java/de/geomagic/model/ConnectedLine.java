@@ -67,6 +67,7 @@ public class ConnectedLine implements Line {
         return sumAllEuclideanDistances();
     }
 
+    @Override
     public ConnectedLine add(SimpleLine addable) {
         val inputForNewCl = new HashSet<SimpleLine>(lines);
         val connectionPoints = getEndpoints();
