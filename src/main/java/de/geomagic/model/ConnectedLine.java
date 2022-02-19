@@ -5,7 +5,6 @@ import de.geomagic.types.OrderAgnosticPair;
 import lombok.Value;
 import lombok.val;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,5 +65,21 @@ public class ConnectedLine implements Line {
     @Override
     public double length() {
         return sumAllEuclideanDistances();
+    }
+
+    public ConnectedLine add(SimpleLine addable) {
+        val inputForNewCl = new HashSet<SimpleLine>(lines);
+        val connectionPoints = getEndpoints();
+        val isConnected = addable.asPointList()
+                                         .stream()
+                                         .anyMatch(p -> p.equals(connectionPoints.getLeft())
+                                                     || p.equals(connectionPoints.getRight()));
+        if(isConnected){
+            inputForNewCl.add(addable);
+            return new ConnectedLine(inputForNewCl);
+        } else {
+            throw new IllegalArgumentException("New lines is not connected to ConnectedLines at the endpoints");
+        }
+
     }
 }

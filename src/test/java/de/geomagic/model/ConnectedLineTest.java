@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test functions for ConnectedLine, many parameterized tests to check multiple edge cases.
@@ -21,9 +21,42 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ConnectedLineTest {
 
     @Test
+    void testAddMethodWithBadInput(){
+        val fixtures = new TestConstants();
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            fixtures.getCl_11_22__22_33().add(SimpleLine.of(5,5,4,4));
+        });
+    }
+
+    @ParameterizedTest(name = "{3}")
+    @MethodSource("getArgsForTestAddMethod")
+    void testAddMethod(ConnectedLine testable, SimpleLine addable, ConnectedLine expected, String desc){
+        ConnectedLine result = testable.add(addable);
+        assertNotSame(result, testable);
+        assertEquals(expected, result, "failed: " + desc);
+    }
+
+    /**
+     * Arguments for testing testAddMethod
+     *
+     * @return each Stream entry will result into a test in {@code testAddMethod}
+     */
+    private static Stream<Arguments> getArgsForTestAddMethod() {
+        val fixtures = new TestConstants();
+        return Stream.of(
+                Arguments.of(fixtures.getCl_00_11__11_22(), fixtures.getLine_3_3__2_2(),
+                        fixtures.getCl_00_11__11_22__22_33(),
+                        "connected line should be able to add a new line"),
+                Arguments.of(fixtures.getCl_11_22__22_33(), fixtures.getLine_0_0__1_1(),
+                        fixtures.getCl_00_11__11_22__22_33(),
+                        "connected line should be able to add a new line with different data")
+        );
+    }
+
+    @Test
     void testStaticFactoryMethod(){
         val fixtures = new TestConstants();
-        val testable = ConnectedLine.of(fixtures.getLine_0_0__1_1(), fixtures.getLine_1_1__2_2());
+        val testable = fixtures.getCl_00_11__11_22();
         assertEquals(new ConnectedLine(Set.of(fixtures.getLine_1_1__2_2(), fixtures.getLine_0_0__1_1())), testable);
     }
 
