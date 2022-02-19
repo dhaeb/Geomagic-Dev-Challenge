@@ -8,6 +8,7 @@ import de.geomagic.types.OrderAgnosticPair;
 import lombok.Value;
 
 import java.util.List;
+import java.util.Objects;
 
 @Value
 public class SimpleLine implements Line {
@@ -45,5 +46,19 @@ public class SimpleLine implements Line {
     @Override
     public double length() {
         return calcEuclideanDistance();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleLine that = (SimpleLine) o;
+        return Objects.equals(p1, that.p1) && Objects.equals(p2, that.p2) ||
+                Objects.equals(p1, that.p2) && Objects.equals(p2, that.p1) ;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(p1) + Objects.hash(p2);
     }
 }
