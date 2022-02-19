@@ -1,6 +1,7 @@
 package de.geomagic.model;
 
 import lombok.val;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,6 +17,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Dan Haeberlein
  */
 class SimpleLineTest {
+
+    @Test
+    void testStaticFactoryMethod(){
+        val fixtures = new TestConstants();
+        assertEquals(new SimpleLine(fixtures.getPoint_1_1(),fixtures.getOrigin()), SimpleLine.of(0,0,1,1));
+        assertEquals(new SimpleLine(1,2,0,0), SimpleLine.of(1,2,0,0));
+    }
+
+    @Test
+    void testStaticFactoryMethodWithBadInput(){
+        val fixtures = new TestConstants();
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+           SimpleLine.of(fixtures.getOrigin(), fixtures.getOrigin());
+        });
+    }
 
     @ParameterizedTest
     @MethodSource("calcEuclideanDistanceArgs")

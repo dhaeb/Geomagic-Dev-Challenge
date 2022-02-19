@@ -14,14 +14,24 @@ import java.util.Objects;
 public class SimpleLine implements Line {
     Point2D p1, p2;
 
-    public SimpleLine(double x1, double y1, double x2, double y2){
-       this.p1 = new Point2D(x1, y1);
-       this.p2 = new Point2D(x2, y2);
+    public static SimpleLine of(double x1, double y1, double x2, double y2){
+        return new SimpleLine(x1, y1, x2, y2);
     }
 
-    public SimpleLine(Point2D p1, Point2D p2) {
+    public static SimpleLine of(Point2D p1, Point2D p2){
+        return new SimpleLine(p1, p2);
+    }
+
+    SimpleLine(Point2D p1, Point2D p2) {
+        if(p1.equals(p2)){
+            throw new IllegalArgumentException("A line needs two distinct points.");
+        }
         this.p1 = p1;
         this.p2 = p2;
+    }
+
+    SimpleLine(double x1, double y1, double x2, double y2) {
+        this(new Point2D(x1, y1), new Point2D(x2, y2));
     }
 
     public double calcEuclideanDistance() {

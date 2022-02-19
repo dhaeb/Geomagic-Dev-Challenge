@@ -1,6 +1,9 @@
 package de.geomagic.model;
 
 import lombok.Value;
+import lombok.val;
+
+import java.util.Set;
 
 /**
  * Small class to encapsulate global settings for tests and fixtures.
@@ -27,7 +30,12 @@ public final class TestConstants {
     SimpleLine line_2_2__1_1 = new SimpleLine(point_2_2, point_1_1);
     SimpleLine line_3_3__2_2 = new SimpleLine(point_3_3, point_2_2);
 
-    SimpleLine line_2_2__2_3 = new SimpleLine(2, 2, 2, 3);
-    SimpleLine line_0_1__1_1 = new SimpleLine(0, 1, 1, 1);
-    SimpleLine line_1_1__1_2 = new SimpleLine(1, 1, 1, 2);
+    SimpleLine line_2_2__2_3 = SimpleLine.of(2, 2, 2, 3);
+    SimpleLine line_0_1__1_1 = SimpleLine.of(0, 1, 1, 1);
+    SimpleLine line_1_1__1_2 = SimpleLine.of(1, 1, 1, 2);
+
+    ConnectedLine cl_00_11__11_22 = new ConnectedLine(Set.of(line_0_0__1_1, line_1_1__2_2));
+    ConnectedLine cl_11_22__22_33 = new ConnectedLine(Set.of(line_3_3__2_2, line_1_1__2_2));
+
+    ConnectedLine cl_00_11__11_22__22_33 = new ConnectedLine(Set.of(line_0_0__1_1, line_1_1__2_2, line_2_2__3_3));
 }
