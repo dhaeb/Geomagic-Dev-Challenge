@@ -14,9 +14,16 @@ import java.util.stream.Stream;
 
 @Value
 public class ConnectedLine implements Line {
-    List<SimpleLine> lines;
+    Set<SimpleLine> lines;
 
-    public ConnectedLine(List<SimpleLine> lines) {
+    public static ConnectedLine of(SimpleLine l1, SimpleLine l2){
+        val constructable = new ConnectedLine(Set.of(l1, l2));
+        // throws IllegalArgumentException when there is no connection between the two lines
+        constructable.getEndpoints();
+        return constructable;
+    }
+
+    ConnectedLine(Set<SimpleLine> lines) {
         this.lines = lines;
     }
 

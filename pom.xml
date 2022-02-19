@@ -53,12 +53,6 @@
         </dependency>
 
         <!-- Test Dependencies -->
-            <!-- For Combinatorics Generator -->
-        <dependency>
-            <groupId>com.github.dpaukov</groupId>
-            <artifactId>combinatoricslib3</artifactId>
-            <version>3.3.0</version>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>

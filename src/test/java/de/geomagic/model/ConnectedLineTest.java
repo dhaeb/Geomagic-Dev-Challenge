@@ -1,17 +1,13 @@
 package de.geomagic.model;
 
-import de.geomagic.Line;
 import de.geomagic.types.OrderAgnosticPair;
-import lombok.Generated;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.paukov.combinatorics3.Generator;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -24,9 +20,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class ConnectedLineTest {
 
+    @Test
+    void testStaticFactoryMethod(){
+        val fixtures = new TestConstants();
+        val testable = ConnectedLine.of(fixtures.getLine_0_0__1_1(), fixtures.getLine_1_1__2_2());
+        assertEquals(new ConnectedLine(Set.of(fixtures.getLine_1_1__2_2(), fixtures.getLine_0_0__1_1())), testable);
+    }
+
+    @Test
+    void testStaticFactoryMethodBadArguments(){
+        val fixtures = new TestConstants();
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            ConnectedLine.of(fixtures.getLine_0_0__1_1(), fixtures.getLine_2_2__3_3());
+        });
+    }
+
     @ParameterizedTest(name = "{2}")
     @MethodSource("getArgsForTestGetEndpoints")
-    void testGetEndpoints(List<SimpleLine> input, OrderAgnosticPair<Point2D, Point2D> expected, String desc) {
+    void testGetEndpoints(Set<SimpleLine> input, OrderAgnosticPair<Point2D, Point2D> expected, String desc) {
         val testable = new ConnectedLine(input);
         assertEquals(expected, testable.getEndpoints(), "Failed: " + desc );
     }
@@ -40,22 +51,15 @@ class ConnectedLineTest {
         val fixtures = new TestConstants();
         val pair_0_0_and_3_3 = OrderAgnosticPair.of(fixtures.getOrigin(), fixtures.getPoint_3_3());
         val pair_3_3_and_0_0 = OrderAgnosticPair.of(fixtures.getPoint_3_3(), fixtures.getOrigin());
-        return Stream.concat(
-                Generator.permutation(fixtures.getLine_1_1__2_2(), fixtures.getLine_3_3__2_2(), fixtures.getLine_0_0__1_1())
-                        .simple()
-                        .stream()
-                        .map(perm -> Arguments.of(perm, pair_0_0_and_3_3, "line with 3 params should have two endpoints: perm " + perm)),
-                Generator.permutation(fixtures.getLine_1_1__2_2(), fixtures.getLine_3_3__2_2(), fixtures.getLine_0_0__1_1())
-                        .simple()
-                        .stream()
-                        .map(perm -> Arguments.of(perm, pair_3_3_and_0_0, "line with 3 params should have two endpoints: perm " + perm))
+        return Stream.of(
+                Arguments.of(Set.of(fixtures.getLine_1_1__2_2(), fixtures.getLine_3_3__2_2(), fixtures.getLine_0_0__1_1()), pair_0_0_and_3_3, "line with 3 params should have two endpoints"),
+                Arguments.of(Set.of(fixtures.getLine_1_1__2_2(), fixtures.getLine_3_3__2_2(), fixtures.getLine_0_0__1_1()), pair_3_3_and_0_0, "line with 3 params should have two endpoints")
         );
-
     }
 
     @ParameterizedTest
     @MethodSource("getArgsForTestSumAllEuclideanDistances")
-    void testSumAllEuclideanDistances(List<SimpleLine> input , double expected) {
+    void testSumAllEuclideanDistances(Set<SimpleLine> input , double expected) {
         val testable = new ConnectedLine(input);
         assertEquals(expected, testable.sumAllEuclideanDistances(), new TestConstants().getTestDelta());
     }
@@ -68,16 +72,16 @@ class ConnectedLineTest {
     private static Stream<Arguments> getArgsForTestSumAllEuclideanDistances() {
         val fixtures = new TestConstants();
         return Stream.of(
-                Arguments.of(List.of(fixtures.getLine_0_1__1_1(),
+                Arguments.of(Set.of(fixtures.getLine_0_1__1_1(),
                                      fixtures.getLine_1_1__1_2()),
                        /*Expected length: */ 2
                 ),
-                Arguments.of(List.of(fixtures.getLine_0_0__1_1(),
+                Arguments.of(Set.of(fixtures.getLine_0_0__1_1(),
                                 fixtures.getLine_1_1__2_2(),
                                fixtures.getLine_2_2__2_3()),
                         /*Expected length: */ 1 + 1.414 * 2 //(1 + √2 * 2)
                 ),
-                Arguments.of(List.of(fixtures.getLine_0_0__1_1(),
+                Arguments.of(Set.of(fixtures.getLine_0_0__1_1(),
                         fixtures.getLine_1_1__2_2(),
                         fixtures.getLine_2_2__3_3()),
                         /*Expected length: */ 3 * 1.414 //(3 * √2)
@@ -87,7 +91,7 @@ class ConnectedLineTest {
 
     @ParameterizedTest
     @MethodSource("getArgsForTestConnectionPoint")
-    void testGetConnectionPoint(List<SimpleLine> input, Set<Point2D> expected) {
+    void testGetConnectionPoint(Set<SimpleLine> input, Set<Point2D> expected) {
         val testable = new ConnectedLine(input);
         assertEquals(expected, testable.getConnectionPoints());
     }
@@ -99,7 +103,7 @@ class ConnectedLineTest {
                 .assertThrows(IllegalArgumentException.class, () -> {
                     val l1 = fixtures.getLine_0_0__1_1();
                     val l2 = fixtures.getLine_2_2__3_3();
-                    new ConnectedLine(List.of(l1, l2)).getConnectionPoints();
+                    new ConnectedLine(Set.of(l1, l2)).getConnectionPoints();
                 }, "Assertions error was expected");
     }
 
@@ -112,13 +116,13 @@ class ConnectedLineTest {
         val fixtures = new TestConstants();
         return Stream.of(
                 Arguments.of(
-                        List.of(fixtures.getLine_0_0__1_1(), fixtures.getLine_1_1__2_2()),
+                        Set.of(fixtures.getLine_0_0__1_1(), fixtures.getLine_1_1__2_2()),
                         Set.of(fixtures.getPoint_1_1())
                 ),
-                Arguments.of(List.of(fixtures.getLine_3_3__2_2(), fixtures.getLine_2_2__1_1()),
+                Arguments.of(Set.of(fixtures.getLine_3_3__2_2(), fixtures.getLine_2_2__1_1()),
                         Set.of(fixtures.getPoint_2_2())
                 ),
-                Arguments.of(List.of(fixtures.getLine_3_3__2_2(), fixtures.getLine_2_2__1_1(), fixtures.getLine_0_0__1_1()),
+                Arguments.of(Set.of(fixtures.getLine_3_3__2_2(), fixtures.getLine_2_2__1_1(), fixtures.getLine_0_0__1_1()),
                         Set.of(fixtures.getPoint_2_2(), fixtures.getPoint_1_1())
                 )
         );
