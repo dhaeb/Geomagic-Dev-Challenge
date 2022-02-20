@@ -1,7 +1,6 @@
 package de.geomagic.model;
 
 import lombok.Value;
-import lombok.val;
 
 import java.util.Set;
 
@@ -19,6 +18,9 @@ public final class TestConstants {
     Point2D point_1_1_minus = new Point2D(-1, -1);
     Point2D point_2_2 = new Point2D(2, 2);
     Point2D point_3_3 = new Point2D(3, 3);
+    Point2D point_4_4 = new Point2D(4, 4);
+    Point2D point_5_5 = new Point2D(5, 5);
+    Point2D point_6_6 = new Point2D(6, 6);
     Point2D point_1_0 = new Point2D(1, 0);
     Point2D point_2_0 = new Point2D(2, 0);
     Point2D point_0_1 = new Point2D(0, 1);
@@ -29,6 +31,8 @@ public final class TestConstants {
     SimpleLine line_2_2__3_3 = new SimpleLine(point_2_2, point_3_3);
     SimpleLine line_2_2__1_1 = new SimpleLine(point_2_2, point_1_1);
     SimpleLine line_3_3__2_2 = new SimpleLine(point_3_3, point_2_2);
+    SimpleLine line_3_3__4_4 = new SimpleLine(point_3_3, point_4_4);
+    SimpleLine line_5_5__6_6 = new SimpleLine(point_5_5, point_6_6);
 
     SimpleLine line_2_2__2_3 = SimpleLine.of(2, 2, 2, 3);
     SimpleLine line_0_1__1_1 = SimpleLine.of(0, 1, 1, 1);

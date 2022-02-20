@@ -15,6 +15,16 @@ import java.util.stream.Stream;
 public class ConnectedLine implements Line {
     Set<SimpleLine> lines;
 
+    public static ConnectedLine of(Line l1, Line l2){
+        if(l1 instanceof ConnectedLine){
+            return l1.add(l2);
+        }
+        if(l2 instanceof ConnectedLine){
+            return l2.add(l1);
+        }
+        return of((SimpleLine) l1, (SimpleLine) l2);
+    }
+
     public static ConnectedLine of(SimpleLine l1, SimpleLine l2){
         val constructable = new ConnectedLine(Set.of(l1, l2));
         // throws IllegalArgumentException when there is no connection between the two lines
@@ -68,19 +78,23 @@ public class ConnectedLine implements Line {
     }
 
     @Override
-    public ConnectedLine add(SimpleLine addable) {
+    public ConnectedLine add(Line addable) {
         val inputForNewCl = new HashSet<SimpleLine>(lines);
         val connectionPoints = getEndpoints();
-        val isConnected = addable.asPointList()
+        val isConnected = List.of(addable.getEndpoints().getLeft(), addable.getEndpoints().getRight())
                                          .stream()
-                                         .anyMatch(p -> p.equals(connectionPoints.getLeft())
-                                                     || p.equals(connectionPoints.getRight()));
+                                         .anyMatch(p -> connectionPoints.containsOne(p));
         if(isConnected){
-            inputForNewCl.add(addable);
+            inputForNewCl.addAll(addable.asSet());
             return new ConnectedLine(inputForNewCl);
         } else {
             throw new IllegalArgumentException("New lines is not connected to ConnectedLines at the endpoints");
         }
 
+    }
+
+    @Override
+    public Set<SimpleLine> asSet() {
+        return lines;
     }
 }

@@ -2,7 +2,6 @@ package de.geomagic.model;
 
 import lombok.val;
 import org.junit.jupiter.api.Test;
-import de.geomagic.model.Point2D;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

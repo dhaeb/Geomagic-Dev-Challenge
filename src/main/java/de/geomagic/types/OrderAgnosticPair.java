@@ -17,6 +17,14 @@ public class OrderAgnosticPair<A, B> {
         return ret;
     }
 
+    public boolean containsOne(Object obj){
+        var ret = false;
+        if(obj != null){
+            ret = obj.equals(left) || obj.equals(right);
+        }
+        return ret;
+    }
+
     @Override
     public int hashCode() {
         return left.hashCode() + right.hashCode();

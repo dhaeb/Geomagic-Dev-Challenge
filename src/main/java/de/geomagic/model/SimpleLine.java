@@ -9,6 +9,7 @@ import lombok.Value;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Value
 public class SimpleLine implements Line {
@@ -54,8 +55,13 @@ public class SimpleLine implements Line {
     }
 
     @Override
-    public ConnectedLine add(SimpleLine s) {
+    public ConnectedLine add(Line s) {
         return ConnectedLine.of(this, s);
+    }
+
+    @Override
+    public Set<SimpleLine> asSet() {
+        return Set.of(this);
     }
 
     @Override
