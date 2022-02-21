@@ -6,7 +6,9 @@ import static java.lang.Math.sqrt;
 import de.geomagic.Line;
 import de.geomagic.types.OrderAgnosticPair;
 import lombok.Value;
+import lombok.val;
 
+import java.awt.geom.Line2D;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -67,6 +69,12 @@ public class SimpleLine implements Line {
     @Override
     public double length() {
         return calcEuclideanDistance();
+    }
+
+    public Line2D toLine2D() {
+        val ret = new Line2D.Double();
+        ret.setLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+        return ret;
     }
 
     @Override

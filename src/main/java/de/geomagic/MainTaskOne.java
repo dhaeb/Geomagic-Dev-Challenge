@@ -15,10 +15,7 @@ public class MainTaskOne {
             val filepath = args[0];
             val inputFile = new File(filepath);
             if(inputFile.exists()){
-                Set<Line> input = new LineFileParser().parse(inputFile);
-                val condensedLines = new LineCondenser().condenseLines(input);
-                List<Line> condensedLinesAsList = new ArrayList<>(condensedLines);
-                condensedLinesAsList.sort((l1, l2) -> Double.compare(l1.length(), l2.length()) * -1);
+                List<Line> condensedLinesAsList = getSortedLinesFromFile(inputFile);
                 condensedLinesAsList.forEach(l -> System.out.println(l));
                 condensedLinesAsList.forEach(l -> System.out.println(l.getEndpoints().toString() + l.length()));
             } else {
@@ -28,5 +25,13 @@ public class MainTaskOne {
             System.err.println("Input files does not exist");
         }
 
+    }
+
+    public static List<Line> getSortedLinesFromFile(File inputFile) {
+        Set<Line> input = new LineFileParser().parse(inputFile);
+        val condensedLines = new LineCondenser().condenseLines(input);
+        List<Line> condensedLinesAsList = new ArrayList<>(condensedLines);
+        condensedLinesAsList.sort((l1, l2) -> Double.compare(l1.length(), l2.length()) * -1);
+        return condensedLinesAsList;
     }
 }
