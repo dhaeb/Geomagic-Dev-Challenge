@@ -16,8 +16,7 @@ public class MainTaskOne {
             val inputFile = new File(filepath);
             if(inputFile.exists()){
                 List<Line> condensedLinesAsList = getSortedLinesFromFile(inputFile);
-                condensedLinesAsList.forEach(l -> System.out.println(l));
-                condensedLinesAsList.forEach(l -> System.out.println(l.getEndpoints().toString() + l.length()));
+                condensedLinesAsList.forEach(l -> System.out.println("Length: " + l.length() + " --> \n" +l));
             } else {
                 System.err.println("Input files does not exist");
             }
