@@ -55,11 +55,6 @@ After a successful build, there are two scripts `run-task-one.sh` and `run-task-
 executed on Unix like systems with `./<respective-scriptname>`. 
 On Windows, look into the next paragraph for potential advise of running the project after building.
 
-#### Code coverage
-
-The code coverage has been calculated during a build with the "Jacoco" maven plugin. 
-See `target\site\jacoco` for insights.
-
 #### Run on Windows with no bash
 One option could be installing a CLI for bash which is included in a software like git.
 Alternatively, you could just execute with normal Windows CLI or Powershell:
@@ -68,9 +63,15 @@ Alternatively, you could just execute with normal Windows CLI or Powershell:
 
 where <MAIN_NAME> could be ether `de.geomagic.MainTaskOne` or `de.geomagic.MainTaskTwo`.
 
+### Code coverage
+
+The code coverage has been calculated during a build with the "Jacoco" maven plugin.
+See `target\site\jacoco` for insights.
+
+
 ## Developer info
 
-The stage of this project in completed. 
+The stage of this project in completed. If there have been some mistakes, please point them out using the issue feature of Github. 
 
 ## Colophon
 
@@ -82,6 +83,9 @@ for reducing the amount of boilerplate I have to write in Java.
 Also, this project uses [JUnit 5](https://junit.org/junit5/) for testing, especially [parameterized tests](https://www.baeldung.com/parameterized-tests-junit-5).
 Thanks to Stackoverflow, [Baeldung](https://www.baeldung.com/) and the [Java Stream API](https://www.baeldung.com/java-8-streams). 
 
-### License
+### Used IDE
+The project have been developed with IntelliJ IDEA Ultimate. 
+
+## License
 
 The project is licensed under terms of the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
