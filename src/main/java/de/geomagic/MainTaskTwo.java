@@ -3,12 +3,7 @@ package de.geomagic;
 import de.geomagic.ui.DrawLinesFrame;
 import lombok.val;
 
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import java.awt.*;
-import java.awt.geom.Line2D;
 import java.io.File;
-import java.util.List;
 
 public class MainTaskTwo {
 
